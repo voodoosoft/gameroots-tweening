@@ -1,6 +1,15 @@
 package de.voodoosoft.tween;
 
+/**
+ * Simple tween thats waits for a given time.
+ */
 public class DelayTween extends AbstractTween {
+	private float value;
+	private boolean done;
+	private boolean updated;
+	private long delay;
+	private long firstUpdate;
+
 	public DelayTween(long delay) {
 		this.delay = delay;
 	}
@@ -53,10 +62,4 @@ public class DelayTween extends AbstractTween {
 			onEnd(time, value);
 		}
 	}
-
-	private float value;
-	private boolean done;
-	private boolean updated;
-	private long delay;
-	private long firstUpdate;
 }

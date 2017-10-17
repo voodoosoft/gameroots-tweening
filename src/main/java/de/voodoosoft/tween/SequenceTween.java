@@ -4,8 +4,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-
+/**
+ * Processes a given sequence of sub tweens.
+ * Sequences can be run as one-shot, looped or commuted.
+ */
 public class SequenceTween implements Tween {
+	private boolean loop;
+	private boolean commute;
+	private int idxDelta;
+	private boolean done;
+	private boolean updated;
+	private int activeTweenIdx;
+	private final List<Tween> tweens;
+
 	public SequenceTween() {
 		tweens = new ArrayList<>();
 		idxDelta = 1;
@@ -79,12 +90,4 @@ public class SequenceTween implements Tween {
 			updated = activeTween.isUpdated();
 		}
 	}
-
-	private boolean loop;
-	private boolean commute;
-	private int idxDelta;
-	private boolean done;
-	private boolean updated;
-	private int activeTweenIdx;
-	private final List<Tween> tweens;
 }

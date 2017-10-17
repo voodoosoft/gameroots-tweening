@@ -1,6 +1,20 @@
 package de.voodoosoft.tween;
 
+/**
+ * Tween that calculates in-between values for the given start and end value.
+ */
 public class LinearFixedStepTween extends AbstractTween {
+	private float value;
+	private float startValue;
+	private float endValue;
+	private float valueDelta;
+	private long updateInterval;
+	private long lastUpdateTime;
+	private boolean active;
+	private boolean updated;
+	private boolean ticked;
+	private boolean done;
+
 	public LinearFixedStepTween(float startValue, float endValue, float valueDelta, long updateInterval) {
 		if (valueDelta < 0 && endValue > startValue) {
 			throw new IllegalArgumentException("end value must be < start value");
@@ -89,15 +103,4 @@ public class LinearFixedStepTween extends AbstractTween {
 			ticked = false;
 		}
 	}
-
-	private float value;
-	private float startValue;
-	private float endValue;
-	private float valueDelta;
-	private long updateInterval;
-	private long lastUpdateTime;
-	private boolean active;
-	private boolean updated;
-	private boolean ticked;
-	private boolean done;
 }

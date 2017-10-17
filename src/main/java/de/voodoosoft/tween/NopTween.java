@@ -1,5 +1,8 @@
 package de.voodoosoft.tween;
 
+/**
+ * Tween that does nothing.
+ */
 public class NopTween implements Tween {
 	@Override
 	public void reset() {
@@ -11,7 +14,7 @@ public class NopTween implements Tween {
 
 	@Override
 	public boolean isDone() {
-		return false;
+		return true;
 	}
 
 	@Override

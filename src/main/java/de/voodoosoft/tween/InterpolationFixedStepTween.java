@@ -3,8 +3,23 @@ package de.voodoosoft.tween;
 import com.badlogic.gdx.math.Interpolation;
 
 
-
+/**
+ * Tween that calculates in-between values for the given start and end value with the help of an arbitrary interpolation function.
+ */
 public class InterpolationFixedStepTween extends AbstractTween {
+	private Interpolation interpolation;
+	private float inputVal;
+	private float value;
+	private float startValue;
+	private float endValue;
+	private float valueDelta;
+	private long updateInterval;
+	private long lastUpdateTime;
+	private boolean active;
+	private boolean updated;
+	private boolean ticked;
+	private boolean done;
+
 	public InterpolationFixedStepTween(Interpolation interpolation, float startValue, float endValue, float valueDelta, long updateInterval) {
 		if (valueDelta < 0 && endValue > startValue) {
 			throw new IllegalArgumentException("end value must be < start value");
@@ -103,17 +118,4 @@ public class InterpolationFixedStepTween extends AbstractTween {
 			ticked = false;
 		}
 	}
-
-	private Interpolation interpolation;
-	private float inputVal;
-	private float value;
-	private float startValue;
-	private float endValue;
-	private float valueDelta;
-	private long updateInterval;
-	private long lastUpdateTime;
-	private boolean active;
-	private boolean updated;
-	private boolean ticked;
-	private boolean done;
 }
