@@ -16,7 +16,7 @@ SequenceTween dayNightTweens = new SequenceTween();
 dayNightTweens.setLoop(true);
 
 // dawn tween: increase value from 0.0 to 1.0 in timed steps of 0.1
-LinearFixedStepTween dawnTween = new LinearFixedStepTween(0, 1, 0.1f, Timing.millisToNano(10));
+FixedStepTween dawnTween = new FixedStepTween(Interpolation.linear, 0, 1, 0.1f, Timing.millisToNano(10));
 dawnTween.setUpdateCallback((time, value) -> System.out.println(Timing.nanoToSecs(time - start) + " dawn: " + value));
 dayNightTweens.addTween(dawnTween);
 
@@ -26,7 +26,7 @@ dayTween.setStartCallback((time, value) -> System.out.println(Timing.nanoToSecs(
 dayNightTweens.addTween(dayTween);
 
 // dusk tween: decrease value from 1.0 to 0.0 in timed steps of 0.1
-LinearFixedStepTween duskTween = new LinearFixedStepTween(1, 0, -0.1f, Timing.millisToNano(10));
+FixedStepTween duskTween = new FixedStepTween(Interpolation.linear, 1, 0, -0.1f, Timing.millisToNano(10));
 duskTween.setUpdateCallback((time, value) -> System.out.println(Timing.nanoToSecs(time - start) + " dusk: " + value));
 dayNightTweens.addTween(duskTween);
 
