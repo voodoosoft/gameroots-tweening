@@ -1,9 +1,14 @@
 package de.voodoosoft.tween;
 
+import com.badlogic.gdx.math.Interpolation;
+
+
 /**
- * Tween that calculates in-between values for the given start and end value.
+ * Tween that calculates in-between values for the given start and end value with the help of an arbitrary interpolation function.
  */
-public class LinearFixedStepTween extends AbstractTween {
+public class FixedStepTween extends AbstractTween {
+	private Interpolation interpolation;
+	private float inputVal;
 	private float value;
 	private float startValue;
 	private float endValue;
@@ -15,7 +20,7 @@ public class LinearFixedStepTween extends AbstractTween {
 	private boolean ticked;
 	private boolean done;
 
-	public LinearFixedStepTween(float startValue, float endValue, float valueDelta, long updateInterval) {
+	public FixedStepTween(Interpolation interpolation, float startValue, float endValue, float valueDelta, long updateInterval) {
 		if (valueDelta < 0 && endValue > startValue) {
 			throw new IllegalArgumentException("end value must be < start value");
 		}
@@ -23,9 +28,11 @@ public class LinearFixedStepTween extends AbstractTween {
 			throw new IllegalArgumentException("end value must be > start value");
 		}
 
+		this.interpolation = interpolation;
 		this.updateInterval = updateInterval;
-		this.startValue = startValue;
 		this.value = startValue;
+		this.inputVal = startValue;
+		this.startValue = startValue;
 		this.endValue = endValue;
 		this.valueDelta = valueDelta;
 		active = true;
@@ -37,6 +44,10 @@ public class LinearFixedStepTween extends AbstractTween {
 
 	public void setValueDelta(float valueDelta) {
 		this.valueDelta = valueDelta;
+	}
+
+	public float getValueDelta() {
+		return valueDelta;
 	}
 
 	public boolean isTicked() {
@@ -63,6 +74,7 @@ public class LinearFixedStepTween extends AbstractTween {
 
 	public void reset() {
 		lastUpdateTime = 0;
+		inputVal  = startValue;
 		value = startValue;
 		updated = false;
 		ticked = false;
@@ -85,7 +97,8 @@ public class LinearFixedStepTween extends AbstractTween {
 		long dt = time - lastUpdateTime;
 		if (dt > updateInterval) {
 			ticked = true;
-			value += valueDelta;
+
+			value = interpolation.apply(inputVal);
 
 			if ((valueDelta > 0 && value >= endValue) || (valueDelta < 0 && value <= endValue)) {
 				value = endValue;
@@ -95,6 +108,8 @@ public class LinearFixedStepTween extends AbstractTween {
 			onUpdate(time, value);
 			updated = true;
 			lastUpdateTime = time;
+			inputVal += valueDelta;
+
 			if (done) {
 				onEnd(time, value);
 			}
