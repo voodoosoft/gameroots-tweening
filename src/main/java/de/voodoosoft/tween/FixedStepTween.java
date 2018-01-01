@@ -42,6 +42,10 @@ public class FixedStepTween extends AbstractTween {
 		return value;
 	}
 
+	public float getInputVal() {
+		return inputVal;
+	}
+
 	public void setValueDelta(float valueDelta) {
 		this.valueDelta = valueDelta;
 	}
