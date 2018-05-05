@@ -8,7 +8,8 @@ public class DelayTween extends AbstractTween {
 	private boolean done;
 	private boolean updated;
 	private long delay;
-	private long firstUpdate;
+	private long delayed;
+	private long lastUpdate;
 
 	public DelayTween(long delay) {
 		this.delay = delay;
@@ -23,9 +24,18 @@ public class DelayTween extends AbstractTween {
 		this.value = value;
 	}
 
+	public void setLastUpdate(long lastUpdate) {
+		this.lastUpdate = lastUpdate;
+	}
+
+	public long getDelayed() {
+		return delayed;
+	}
+
 	@Override
 	public void reset() {
-		firstUpdate = 0;
+		lastUpdate = 0;
+		delayed = 0;
 		done = false;
 		updated = false;
 	}
@@ -47,8 +57,9 @@ public class DelayTween extends AbstractTween {
 			return;
 		}
 
-		if (firstUpdate == 0) {
-			firstUpdate = time;
+		if (lastUpdate == 0) {
+			lastUpdate = time;
+			delayed = 0;
 			updated = true;
 			onStart(time, value);
 			return;
@@ -56,8 +67,10 @@ public class DelayTween extends AbstractTween {
 
 		onUpdate(time, value);
 
-		long dt = time - firstUpdate;
-		if (dt >= delay) {
+		long dt = time - lastUpdate;
+		delayed += dt;
+		lastUpdate = time;
+		if (delayed >= delay) {
 			done = true;
 			onEnd(time, value);
 		}
