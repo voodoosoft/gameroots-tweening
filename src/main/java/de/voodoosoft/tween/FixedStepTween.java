@@ -38,6 +38,18 @@ public class FixedStepTween extends AbstractTween {
 		active = true;
 	}
 
+	public void setStartValue(float startValue) {
+		this.startValue = startValue;
+	}
+
+	public void setEndValue(float endValue) {
+		this.endValue = endValue;
+	}
+
+	public void setValue(float value) {
+		this.value = value;
+	}
+
 	public float getValue() {
 		return value;
 	}
