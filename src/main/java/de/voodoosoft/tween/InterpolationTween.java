@@ -6,7 +6,8 @@ import com.badlogic.gdx.math.Interpolation;
 /**
  * Tween that calculates in-between values for the given start and end value with the help of an arbitrary interpolation function.
  */
-public class FixedStepTween extends AbstractTween {
+public class InterpolationTween extends AbstractTween {
+	private Interpolation interpolation;
 	private float inputVal;
 	private float value;
 	private float startValue;
@@ -19,7 +20,7 @@ public class FixedStepTween extends AbstractTween {
 	private boolean ticked;
 	private boolean done;
 
-	public FixedStepTween(float startValue, float endValue, float valueDelta, long updateInterval) {
+	public InterpolationTween(Interpolation interpolation, float startValue, float endValue, float valueDelta, long updateInterval) {
 		if (valueDelta < 0 && endValue > startValue) {
 			throw new IllegalArgumentException("end value must be < start value");
 		}
@@ -27,6 +28,7 @@ public class FixedStepTween extends AbstractTween {
 			throw new IllegalArgumentException("end value must be > start value");
 		}
 
+		this.interpolation = interpolation;
 		this.updateInterval = updateInterval;
 		this.value = startValue;
 		this.inputVal = startValue;
@@ -111,7 +113,8 @@ public class FixedStepTween extends AbstractTween {
 		long dt = time - lastUpdateTime;
 		if (dt > updateInterval) {
 			ticked = true;
-			value += valueDelta;
+
+			value = interpolation.apply(inputVal);
 
 			if ((valueDelta > 0 && value >= endValue) || (valueDelta < 0 && value <= endValue)) {
 				value = endValue;

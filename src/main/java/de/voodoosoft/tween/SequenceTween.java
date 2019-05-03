@@ -57,8 +57,16 @@ public class SequenceTween implements Tween {
 		activeTweenIdx = 0;
 	}
 
+	public List<Tween> getTweens() {
+		return tweens;
+	}
+
 	public void setActiveTween(int activeTween) {
 		this.activeTweenIdx = activeTween;
+	}
+
+	public int getActiveTweenIdx() {
+		return activeTweenIdx;
 	}
 
 	@Override
