@@ -21,7 +21,7 @@ public class TweenTest {
 
 		// dawn tween: increase value from 0.0 to 1.0 in timed steps of 0.1
 		long updateInterval = Timing.millisToNano(10);
-		FixedStepTween dawnTween = new FixedStepTween(Interpolation.linear,0, 1, 0.1f, updateInterval);
+		FixedStepTween dawnTween = new FixedStepTween(0, 1, 0.1f, updateInterval);
 		dawnTween.setUpdateCallback((time, value) -> System.out.println(Timing.nanoToSecs(time - start) + " dawn: " + value));
 		dayNightTweens.addTween(dawnTween);
 
@@ -31,7 +31,7 @@ public class TweenTest {
 		dayNightTweens.addTween(dayTween);
 
 		// dusk tween: decrease value from 1.0 to 0.0 in timed steps of 0.1
-		FixedStepTween duskTween = new FixedStepTween(Interpolation.linear,1,0, -0.1f, updateInterval);
+		FixedStepTween duskTween = new FixedStepTween(1,0, -0.1f, updateInterval);
 		duskTween.setUpdateCallback((time, value) -> System.out.println(Timing.nanoToSecs(time - start) + " dusk: " + value));
 		dayNightTweens.addTween(duskTween);
 
@@ -50,9 +50,9 @@ public class TweenTest {
 	public void testSine() {
 		long updateInterval = Timing.millisToNano(1);
 
-		FixedStepTween sineUpTween = new FixedStepTween(Interpolation.sine, 0, 1, 0.1f, updateInterval);
+		FixedStepTween sineUpTween = new FixedStepTween(0, 1, 0.1f, updateInterval);
 		sineUpTween.setUpdateCallback((time, value) -> System.out.println(tweenValueToString(value)));
-		FixedStepTween sineDownTween = new FixedStepTween(Interpolation.sine, 1, 0, -0.1f, updateInterval);
+		FixedStepTween sineDownTween = new FixedStepTween(1, 0, -0.1f, updateInterval);
 		sineDownTween.setUpdateCallback((time, value) -> System.out.println(tweenValueToString(value)));
 
 		SequenceTween sequence = new SequenceTween();
